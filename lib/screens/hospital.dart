@@ -3,25 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:gender_selection/gender_selection.dart';
 import 'package:intl/intl.dart';
 
-class Donor extends StatefulWidget {
+class Hospital extends StatefulWidget {
   @override
-  _DonorState createState() => _DonorState();
+  _HospitalState createState() => _HospitalState();
 }
 
-class _DonorState extends State<Donor> {
+class _HospitalState extends State<Hospital> {
   final format = DateFormat("yyyy-MM-dd");
 
   DateTime dob;
   bool c = false;
 
   String bg;
-  bool yes = false;
 
   DateTime donated;
-
-  bool no = false;
-
-  Gender genders = Gender.Male;
 
 
   _ackAlert(BuildContext context) {
@@ -50,8 +45,8 @@ class _DonorState extends State<Donor> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.orange,
-        title: Text("Donor Details"),
+        backgroundColor: Colors.green,
+        title: Text("Hospital Details"),
         centerTitle: true,
       ),
       body: Container(
@@ -59,27 +54,24 @@ class _DonorState extends State<Donor> {
     gradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight, // 10% of the width, so there are ten blinds.
-      colors: [Colors.orange, Colors.red], // whitish to gray
+      colors: [Colors.green, Colors.greenAccent], // whitish to gray
       tileMode: TileMode.repeated, // repeats the gradient over the canvas
     ),
   ),
   child: Theme(
     data: ThemeData(
-      cursorColor: Colors.red,
-      // indicatorColor: Colors.red,
-      primaryColor: Colors.red
+      cursorColor: Colors.green,
+      // indicatorColor: Colors.green,
+      primaryColor: Colors.green
     ),
       child: ListView(
       children: <Widget>[
               GenderSelection(
-                selectedGender: genders,
-        // selectedGenderIconBackgroundColor: Colors.indigo, // default red 
+                selectedGenderIconColor: Colors.green,
+        selectedGenderIconBackgroundColor: Colors.white, // default green 
         checkIconAlignment: Alignment.centerRight,   // default bottomRight
         selectedGenderCheckIcon: Icons.check, // default Icons.check
         onChanged: (Gender gender){
-          setState(() {
-            genders=gender;
-          });
         print(gender);
         },
         equallyAligned: true,
@@ -96,7 +88,7 @@ class _DonorState extends State<Donor> {
         
         TextField(
           decoration: InputDecoration(
-            hintText: "Name",
+            hintText: "Patient Name",
             border: OutlineInputBorder(
               
               borderRadius: BorderRadius.circular(20.0),
@@ -137,6 +129,18 @@ class _DonorState extends State<Donor> {
         TextField(
           decoration: InputDecoration(
             hintText: "Address",
+            border: OutlineInputBorder(
+              
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10.0
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: "Patient Doctor Name",
             border: OutlineInputBorder(
               
               borderRadius: BorderRadius.circular(20.0),
@@ -191,85 +195,36 @@ class _DonorState extends State<Donor> {
         ),
         ),
 
-        SizedBox(
-          height: 10,
-        ),
+        // SizedBox(
+        //   height: 10,
+        // ),
 
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: ListTile(
-            isThreeLine: true,
-            title: Text("When you donate before "),
-            subtitle: DateTimeField(
+        // Padding(
+        //   padding: const EdgeInsets.all(2.0),
+        //   child: ListTile(
+        //     isThreeLine: true,
+        //     title: Text("When you donate before "),
+        //     subtitle: DateTimeField(
                       
-                      format: format,
-                      onChanged: (value){
-                        donated = value;
+        //               format: format,
+        //               onChanged: (value){
+        //                 donated = value;
                         
-                        // print(dob);
-                      },
-                      onShowPicker: (context, currentValue) {
-                        return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(1900),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100));
-                      },
-                    ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Text("Send My Info ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-
-          child: Row(
-            children: <Widget>[
-              Text("To Everyone "),
-          Checkbox(value: yes, 
-          activeColor: Colors.orange,
-          onChanged: (bool value){
-            setState(() {
-              yes = value;
-              if(yes)
-                no=false;
-              
-            });
-          }),
-              Text("Only To Hospitals  "),
-
-
-          Checkbox(value: no, 
-          activeColor: Colors.orange,
-          onChanged: (bool value){
-            setState(() {
-              no = value;
-              if(no)
-                yes = false;
-
-            });
-          }),
-
-
-
-            ],
-          ),
-        ),
-
-        
-        SizedBox(
-          height: 10,
-        ),
+        //                 // print(dob);
+        //               },
+        //               onShowPicker: (context, currentValue) {
+        //                 return showDatePicker(
+        //                     context: context,
+        //                     firstDate: DateTime(1900),
+        //                     initialDate: currentValue ?? DateTime.now(),
+        //                     lastDate: DateTime(2100));
+        //               },
+        //             ),
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 10,
+        // ),
 
         RaisedButton(
           onPressed: (){
@@ -280,7 +235,7 @@ class _DonorState extends State<Donor> {
         child: Text("Submit"),),
 
         SizedBox(
-          height: 10,
+          height: 20,
         ),
       ],
     ),
@@ -293,7 +248,7 @@ class _DonorState extends State<Donor> {
   }
 
   DropdownButton _bg() => DropdownButton<String>( 
-   iconEnabledColor: Colors.orange,
+   iconEnabledColor: Colors.green,
         items: [
           DropdownMenuItem(
             value: "A+",

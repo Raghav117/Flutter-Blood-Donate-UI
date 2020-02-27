@@ -1,3 +1,4 @@
+import 'package:blood_management/screens/hospital.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/donor.dart';
@@ -111,16 +112,16 @@ class _MyAppState extends State<MyApp> {
                               ),
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10)
-                              
                             ),
                             child: InkWell(
                               onTap: (){
                                 if(c==1)
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Donor()));
+                                else
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Hospital()));
                               },
                               child: Center(child: Text("Next ->",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15)))),
                           ):Container(),
-                      
                     ],
                   ),
         ),
