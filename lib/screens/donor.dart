@@ -1,3 +1,5 @@
+import 'package:blood_management/models/donor.dart';
+import 'package:blood_management/models/donor_db.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gender_selection/gender_selection.dart';
@@ -23,6 +25,12 @@ class _DonorState extends State<Donor> {
 
   Gender genders = Gender.Male;
 
+   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String name,address,email,ph;
+  
+
+
 
   _ackAlert(BuildContext context) {
     showDialog(
@@ -47,6 +55,7 @@ class _DonorState extends State<Donor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         elevation: 0.0,
@@ -95,6 +104,12 @@ class _DonorState extends State<Donor> {
         ),
         
         TextField(
+          onChanged: (value){
+            name = value;
+          },
+          onSubmitted: (value){
+            name = value;
+          },
           decoration: InputDecoration(
             hintText: "Name",
             border: OutlineInputBorder(
@@ -109,6 +124,13 @@ class _DonorState extends State<Donor> {
 
 
         TextField(
+          onChanged: (value){
+            ph=value;
+          },
+          onSubmitted: (value){
+            ph=value;
+          },
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: "Mobile Number",
             border: OutlineInputBorder(
@@ -122,6 +144,12 @@ class _DonorState extends State<Donor> {
         ),
 
         TextField(
+          onChanged: (value){
+            email=value;
+          },
+          onSubmitted: (value){
+            email=value;
+          },
           decoration: InputDecoration(
             hintText: "Email",
             border: OutlineInputBorder(
@@ -135,6 +163,12 @@ class _DonorState extends State<Donor> {
         ),
 
         TextField(
+          onChanged: (value){
+            address=value;
+          },
+          onSubmitted: (value){
+            address=value;
+          },
           decoration: InputDecoration(
             hintText: "Address",
             border: OutlineInputBorder(
@@ -268,19 +302,37 @@ class _DonorState extends State<Donor> {
 
         
         SizedBox(
-          height: 10,
+          height: 20,
         ),
 
-        RaisedButton(
-          onPressed: (){
-      _ackAlert(context);
-          },
-          elevation: 0.0,
-        color: Colors.transparent,
-        child: Text("Submit"),),
+        Padding(
+          padding: EdgeInsets.only(left: 120,right: 120),
+          child: MaterialButton(
+            elevation: 0.0,
+            height: 40,
+            minWidth: 10,
+            onPressed: (){
+              if(ph==null || name == null || email == null || dob == null || bg == null){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Values Should not be empty "))
+                );
+              }
+              else{
+              DonorData data = DonorData(name, bg, DateTime.now().toString(), address, dob.toString(),ph,genders.toString());
+              DBProvider db = new DBProvider();
+              db.insertData(data);
+              print("yea");
+      _ackAlert(context);}
+            },
+          shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(20.0)
+          ),
+          color: Colors.orange,
+          child: Text("Submit"),),
+        ),
 
         SizedBox(
-          height: 10,
+          height: 20,
         ),
       ],
     ),

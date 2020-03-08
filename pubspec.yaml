@@ -19,6 +19,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path:
+  path_provider:
 
   datetime_picker_formfield:
   intl:

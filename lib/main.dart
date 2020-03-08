@@ -1,4 +1,5 @@
 import 'package:blood_management/screens/hospital.dart';
+import 'package:blood_management/screens/list.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/donor.dart';
@@ -6,6 +7,7 @@ import 'screens/donor.dart';
 void main() => runApp(
   MaterialApp(
     title: "Life",
+    debugShowCheckedModeBanner: false,
     home: MyApp(),
   )
 );
@@ -20,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    c=0;
+    c=0;  
   }
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,39 @@ class _MyAppState extends State<MyApp> {
           title: Text("Life"),
           centerTitle: true,
           backgroundColor: Colors.red,),
+
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                Theme(
+                  data: ThemeData(
+                    primaryColor: Colors.red
+                  ),
+                                  child: UserAccountsDrawerHeader(
+                    accountName: Text("Admin"), 
+                    accountEmail: Text("admin..._@gmail.com"),
+                    currentAccountPicture: Icon(Icons.account_circle,size: 85,color: Colors.white,),
+                    ),
+                ),
+
+                ListTile(
+                  onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>Data(c: true,))),
+                  contentPadding: EdgeInsets.only(left:20),
+                  leading: Icon(Icons.filter,color: Colors.red,),
+                  title: Text("Donor's Records",style:TextStyle(color: Colors.red,fontSize: 20,fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ListTile(
+                  onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>Data(c: false,))),
+                  contentPadding: EdgeInsets.only(left:20),
+                  leading: Icon(Icons.filter,color: Colors.red,),
+                  title: Text("Hospital's Records",style:TextStyle(color: Colors.red,fontSize: 20,fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ), 
+         ),
         body: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[

@@ -1,3 +1,5 @@
+import 'package:blood_management/models/hospital.dart';
+import 'package:blood_management/models/hospital_db.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gender_selection/gender_selection.dart';
@@ -10,6 +12,7 @@ class Hospital extends StatefulWidget {
 
 class _HospitalState extends State<Hospital> {
   final format = DateFormat("yyyy-MM-dd");
+  Gender genders = Gender.Male;
 
   DateTime dob;
   bool c = false;
@@ -17,6 +20,16 @@ class _HospitalState extends State<Hospital> {
   String bg;
 
   DateTime donated;
+
+  String address;
+
+  String name;
+
+  var email;
+
+  var ph;
+   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
 
   _ackAlert(BuildContext context) {
@@ -42,6 +55,7 @@ class _HospitalState extends State<Hospital> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         elevation: 0.0,
@@ -67,12 +81,15 @@ class _HospitalState extends State<Hospital> {
       child: ListView(
       children: <Widget>[
               GenderSelection(
+                selectedGender: genders,
                 selectedGenderIconColor: Colors.green,
         selectedGenderIconBackgroundColor: Colors.white, // default green 
         checkIconAlignment: Alignment.centerRight,   // default bottomRight
         selectedGenderCheckIcon: Icons.check, // default Icons.check
         onChanged: (Gender gender){
-        print(gender);
+        setState(() {
+          genders=gender;
+        });
         },
         equallyAligned: true,
         animationDuration: Duration(milliseconds: 400),
@@ -87,8 +104,26 @@ class _HospitalState extends State<Hospital> {
         ),
         
         TextField(
+          onChanged: (value){
+            name = value;
+          },
+          onSubmitted: (value){
+            name = value;
+          },
           decoration: InputDecoration(
             hintText: "Patient Name",
+            border: OutlineInputBorder(
+              
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 10.0
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: "Patient Doctor Name",
             border: OutlineInputBorder(
               
               borderRadius: BorderRadius.circular(20.0),
@@ -101,6 +136,12 @@ class _HospitalState extends State<Hospital> {
 
 
         TextField(
+          onChanged: (value){
+            ph = value;
+          },
+          onSubmitted: (value){
+            ph = value;
+          },
           decoration: InputDecoration(
             hintText: "Mobile Number",
             border: OutlineInputBorder(
@@ -114,6 +155,12 @@ class _HospitalState extends State<Hospital> {
         ),
 
         TextField(
+          onChanged: (value){
+            email = value;
+          },
+          onSubmitted: (value){
+            email = value;
+          },
           decoration: InputDecoration(
             hintText: "Email",
             border: OutlineInputBorder(
@@ -127,20 +174,14 @@ class _HospitalState extends State<Hospital> {
         ),
 
         TextField(
+          onChanged: (value){
+            address = value;
+          },
+          onSubmitted: (value){
+            address = value;
+          },
           decoration: InputDecoration(
             hintText: "Address",
-            border: OutlineInputBorder(
-              
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10.0
-        ),
-        TextField(
-          decoration: InputDecoration(
-            hintText: "Patient Doctor Name",
             border: OutlineInputBorder(
               
               borderRadius: BorderRadius.circular(20.0),
@@ -195,44 +236,40 @@ class _HospitalState extends State<Hospital> {
         ),
         ),
 
-        // SizedBox(
-        //   height: 10,
-        // ),
+        SizedBox(
+          height: 20,
+        ),
 
-        // Padding(
-        //   padding: const EdgeInsets.all(2.0),
-        //   child: ListTile(
-        //     isThreeLine: true,
-        //     title: Text("When you donate before "),
-        //     subtitle: DateTimeField(
-                      
-        //               format: format,
-        //               onChanged: (value){
-        //                 donated = value;
-                        
-        //                 // print(dob);
-        //               },
-        //               onShowPicker: (context, currentValue) {
-        //                 return showDatePicker(
-        //                     context: context,
-        //                     firstDate: DateTime(1900),
-        //                     initialDate: currentValue ?? DateTime.now(),
-        //                     lastDate: DateTime(2100));
-        //               },
-        //             ),
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-
-        RaisedButton(
-          onPressed: (){
+        Padding(
+          padding: EdgeInsets.only(left: 120,right: 120),
+          child: MaterialButton(
+            hoverColor: Colors.grey,
+            elevation: 0.0,
+            highlightColor: Colors.grey,
+            height: 40,
+            minWidth: 10,
+            onPressed: (){
+if(ph==null || name == null || email == null || dob == null || bg == null){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Values Should not be empty "))
+                );
+              }
+              else{
+              HospitalData data = HospitalData(name, bg, DateTime.now().toString(), address, dob.toString(),ph,genders.toString());
+              DBHProvider db = new DBHProvider();
+              db.insertData(data);
       _ackAlert(context);
-          },
-          elevation: 0.0,
-        color: Colors.transparent,
-        child: Text("Submit"),),
+              }
+            },
+          shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(20.0) ,
+           side: BorderSide(
+             color: Colors.white
+           ),
+          ),
+          color: Colors.transparent,
+          child: Text("Submit"),),
+        ),
 
         SizedBox(
           height: 20,
