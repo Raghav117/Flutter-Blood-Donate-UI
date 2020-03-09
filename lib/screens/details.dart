@@ -41,7 +41,7 @@ class Details extends StatelessWidget {
                     SizedBox(height: 50,),
                     card("   Birth Date", data.dob),
                     SizedBox(height: 50,),
-                    card("   Donation Time", data.email),
+                    card("   Donation Date", data.email),
                     SizedBox(height: 50,),
                     card("   Gender", data.gender),
                   ],
@@ -65,7 +65,7 @@ class Details extends StatelessWidget {
 }
 
 Widget card(String key,String value){
-  if(key == "   Birth Date" || key == "   Donation Time"){
+  if(key == "   Birth Date" || key == "   Donation Date"){
     String v = "";
     for(int i=0;i<10;++i){
       v=v+value[i];

@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite:
+  google_fonts:
   path:
   path_provider:
 

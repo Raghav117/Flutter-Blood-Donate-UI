@@ -20,9 +20,10 @@ class _HospitalState extends State<Hospital> {
   String bg;
 
   DateTime donated;
+  final regex = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
 
   String address;
-
+  String pname;
   String name;
 
   var email;
@@ -122,6 +123,12 @@ class _HospitalState extends State<Hospital> {
           height: 10.0
         ),
         TextField(
+          onChanged: (value){
+            pname = value;
+          },
+          onSubmitted: (value){
+            pname = value;
+          },
           decoration: InputDecoration(
             hintText: "Patient Doctor Name",
             border: OutlineInputBorder(
@@ -142,6 +149,7 @@ class _HospitalState extends State<Hospital> {
           onSubmitted: (value){
             ph = value;
           },
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: "Mobile Number",
             border: OutlineInputBorder(
@@ -253,6 +261,20 @@ if(ph==null || name == null || email == null || dob == null || bg == null){
                 _scaffoldKey.currentState.showSnackBar(
                   SnackBar(content: Text("Values Should not be empty "))
                 );
+              }
+              else if(!regex.hasMatch(name)){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Name is not valid "))
+                );
+              }
+              else if(!regex.hasMatch(pname)){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Patient Docotor Name is not valid "))
+                );
+              }
+              else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Email is not valid ")));
               }
               else{
               HospitalData data = HospitalData(name, bg, DateTime.now().toString(), address, dob.toString(),ph,genders.toString());

@@ -29,7 +29,7 @@ class _DonorState extends State<Donor> {
 
   String name,address,email,ph;
   
-
+  final regex = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
 
 
   _ackAlert(BuildContext context) {
@@ -316,6 +316,15 @@ class _DonorState extends State<Donor> {
                 _scaffoldKey.currentState.showSnackBar(
                   SnackBar(content: Text("Values Should not be empty "))
                 );
+              }
+              else if(!regex.hasMatch(name)){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Name is not valid "))
+                );
+              }
+              else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(content: Text("Email is not valid ")));
               }
               else{
               DonorData data = DonorData(name, bg, DateTime.now().toString(), address, dob.toString(),ph,genders.toString());

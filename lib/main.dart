@@ -3,6 +3,7 @@ import 'package:blood_management/screens/list.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/donor.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
           child: Scaffold(
             resizeToAvoidBottomPadding: true,
         appBar: AppBar(
-          title: Text("Life"),
+          title: Text("Blood Bank Management Application"),
           centerTitle: true,
           backgroundColor: Colors.red,),
 
@@ -71,11 +72,23 @@ class _MyAppState extends State<MyApp> {
         body: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
+                      
                       Container(
                         height: height/1.6,
                         width: width/2, 
                         child: Center(
-                          child: Image.asset("images/logo.png"),
+                          child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Image.asset("images/logo.png"),
+                      Text("Donate Blood Save Life!",style: GoogleFonts.bellefair(
+                        fontSize: 22,
+                        color: Colors.red
+                      )),
+
+                            ],
+                          ),
                         ),
                       ),
 
